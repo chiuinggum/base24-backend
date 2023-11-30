@@ -11,3 +11,14 @@ export const createMapRow = async (name, user_id, lat, lng) => {
         throw err;
     }
 };
+
+export const getMapRowById = async (id) => {
+    try {
+        const [mapRow] = await db.query('SELECT * FROM maps WHERE id = ?', [id]);
+        console.log(`map ${id} found`);
+        return mapRow;
+    } catch (err) {
+        console.error(err);
+        throw err;
+    }
+}
