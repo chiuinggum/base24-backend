@@ -15,7 +15,7 @@ export const createMarkerRow = async (name, place_id, lat, lng) => {
 export const createMarkerInfoRow = async (map_id, marker_id, info) => {
     try {
         const [markerInfoRow] = await db.query('INSERT INTO marker_info (map_id, marker_id, info) VALUES (?, ?, ?)', [map_id, marker_id, info]);
-        console.log(`marker info with marker_id: ${marker_id} created with id ${infoRow.insertId}`);
+        console.log(`marker info with marker_id: ${marker_id} created with id ${markerInfoRow.insertId}`);
         return markerInfoRow;
     } catch (err) {
         console.error(err);

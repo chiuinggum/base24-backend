@@ -27,7 +27,14 @@ export const createMarkerInfo = async (req, res, next) => {
     try {
         const { map_id, marker_id, info } = req.body;
         const markerInfo = await createMarkerInfoRow(map_id, marker_id, info);
-        res.status(200).json({ data: markerInfo });
+        res.status(200).json({
+            data: {
+                id: markerInfo.insertId,
+                map_id,
+                marker_id,
+                info
+            }
+        });
         next();
     } catch (err) {
         console.error(err);
