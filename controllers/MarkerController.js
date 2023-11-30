@@ -1,4 +1,8 @@
-import { createMarkerRow, createMarkerInfoRow, getMarkersByMapId } from '../models/MarkerModel.js';
+import {
+    createMarkerRow,
+    createMarkerInfoRow,
+    getMarkersByMapId
+} from '../models/MarkerModel.js';
 
 export const createMarker = async (req, res, next) => {
     try {
