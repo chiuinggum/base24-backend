@@ -1,4 +1,8 @@
-import { createMarker, createMarkerInfo } from '../models/MarkerModel.js';
+import {
+    createMarker,
+    createMarkerInfo,
+    getMarkersByMapId
+} from '../models/MarkerModel.js';
 
 class MarkerController {
     static async createMarker(req, res, next) {
@@ -20,6 +24,16 @@ class MarkerController {
         } catch (err) {
             console.error(err);
             res.status(500).json({ error: 'Error Creating Marker Info' });
+        }
+    };
+    static async getMarkers(req, res, next) {
+        try {
+            const { map_id } = req.params;
+            const markers = await getMarkersByMapId(map_id);
+            res.status(200).json({ data: markers });
+        } catch (err) {
+            console.error(err);
+            res.status(500).json({ error: 'Error Fetching Markers' });
         }
     }
 };

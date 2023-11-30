@@ -8,7 +8,8 @@ class MarkerModel {
             console.error(err);
             throw err;
         }
-    }
+    };
+    // needs modification
     static async createMarkerInfo(marker_id, info) {
         try {
             const [markerInfoRow] = await db.query('INSERT INTO marker_info (marker_id, info) VALUES (?, ?)', [marker_id, info]);
@@ -18,7 +19,17 @@ class MarkerModel {
             console.error(err);
             throw err;
         }
-    }
+    };
+    static async getMarkersByMapId(map_id) {
+        try {
+            const [markerRows] = await db.query('SELECT * FROM marker_info WHERE map_id = ?', [map_id]);
+            console.log(`markers with map_id: ${map_id} fetched`);
+            return markerRows;
+        } catch (err) {
+            console.error(err);
+            throw err;
+        }
+    };
 };
 
 export default MarkerModel;

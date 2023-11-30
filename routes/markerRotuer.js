@@ -6,3 +6,4 @@ const markerRouter = express.Router();
 
 markerRouter.post('/create', createMarker);
 markerRouter.post('/info', createMarkerInfo);
+markerRouter.get('/:map_id', );
