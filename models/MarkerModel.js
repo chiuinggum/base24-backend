@@ -38,7 +38,7 @@ export const getMarkerLocationById = async (marker_id) => {
     try {
         const [markerRow] = await db.query('SELECT * FROM markers WHERE id = ?', [marker_id]);
         console.log(`marker with id: ${marker_id} fetched`);
-        return markerRow;
+        return markerRow[0];
     } catch (err) {
         console.error(err);
         throw err;

@@ -1,7 +1,8 @@
 import {
     createMarkerRow,
     createMarkerInfoRow,
-    getMarkersByMapId
+    getMarkersByMapId,
+    getMarkerLocationById
 } from '../models/MarkerModel.js';
 
 export const createMarker = async (req, res, next) => {
@@ -42,17 +43,17 @@ export const createMarkerInfo = async (req, res, next) => {
     }
 };
 // have problems
-export const getMarkers = async (req, res, next) => {
-    try {
-        const { map_id } = req.params;
-        const markers = await getMarkersByMapId(map_id);
-        res.status(200).json({ data: markers });
-        next();
-    } catch (err) {
-        console.error(err);
-        res.status(500).json({ error: 'Error Fetching Markers' });
-    }
-};
+// export const getMarkers = async (req, res, next) => {
+//     try {
+//         const { map_id } = req.params;
+//         const markers = await getMarkersByMapId(map_id);
+//         res.status(200).json({ data: markers });
+//         next();
+//     } catch (err) {
+//         console.error(err);
+//         res.status(500).json({ error: 'Error Fetching Markers' });
+//     }
+// };
 export const listMarkersDetails = async (req, res, next) => {
     try {
         const { map_id } = req.params;
@@ -60,8 +61,14 @@ export const listMarkersDetails = async (req, res, next) => {
         let markersWithLocation = [];
         for (let marker of markers) {
             const markerLocation = await getMarkerLocationById(marker.marker_id);
-            const data = { ...marker, ...markerLocation };
-            console.log(data);
+            const data = {
+                id: marker.id,
+                name: markerLocation.name,
+                place_id: markerLocation.place_id,
+                lat: markerLocation.lat,
+                lng: markerLocation.lng,
+                info: marker.info
+            };
             markersWithLocation.push(data);
         }
         res.status(200).json({ data: markersWithLocation });
