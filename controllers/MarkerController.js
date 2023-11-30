@@ -18,8 +18,8 @@ class MarkerController {
     };
     static async createMarkerInfo(req, res, next) {
         try {
-            const { marker_id, info } = req.body;
-            const markerInfo = await createMarkerInfo(marker_id, info);
+            const { map_id, marker_id, info } = req.body;
+            const markerInfo = await createMarkerInfo(map_id, marker_id, info);
             res.status(200).json({ data: markerInfo });
         } catch (err) {
             console.error(err);
