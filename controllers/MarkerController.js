@@ -26,7 +26,8 @@ export const createMarker = async (req, res, next) => {
 };
 export const createMarkerInfo = async (req, res, next) => {
     try {
-        const { map_id, marker_id, info } = req.body;
+        const { map_id, marker_id } = req.body;
+        const info = req.body.info || '';
         const markerInfo = await createMarkerInfoRow(map_id, marker_id, info);
         res.status(200).json({
             data: {

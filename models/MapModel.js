@@ -16,7 +16,7 @@ export const getMapRowById = async (id) => {
     try {
         const [mapRow] = await db.query('SELECT * FROM maps WHERE id = ?', [id]);
         console.log(`map ${id} found`);
-        return mapRow;
+        return mapRow[0];
     } catch (err) {
         console.error(err);
         throw err;
