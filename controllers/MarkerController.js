@@ -2,7 +2,9 @@ import {
     createMarkerRow,
     createMarkerInfoRow,
     getMarkersByMapId,
-    getMarkerLocationById
+    getMarkerLocationById,
+    updateMarkerInfoByMarkerInfoId,
+    getMarkerInfoByMarkerInfoId
 } from '../models/MarkerModel.js';
 
 export const createMarker = async (req, res, next) => {
@@ -79,3 +81,23 @@ export const listMarkersDetails = async (req, res, next) => {
         res.status(500).json({ error: 'Error Fetching Markers' });
     }
 };
+
+export const updateMarkerInfo = async (req, res, next) => {
+    try {
+        const { marker_info_id } = req.params;
+        const { info } = req.body;
+        await updateMarkerInfoByMarkerInfoId(marker_info_id, info);
+        const markerInfo = await getMarkerInfoByMarkerInfoId(marker_info_id);
+        res.status(200). json({
+            data: {
+                id: markerInfo.id,
+                map_id: markerInfo.map_id,
+                marker_id: markerInfo.marker_id,
+                new_info: markerInfo.info
+            }
+        })
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ error: 'Error Updating Marker Info' });
+    }
+}

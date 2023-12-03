@@ -44,3 +44,26 @@ export const getMarkerLocationById = async (marker_id) => {
         throw err;
     }
 };
+
+export const updateMarkerInfoByMarkerInfoId = async (marker_info_id, info) => {
+    try {
+        const [markerInfoRow] = await db.query('UPDATE marker_info SET info = ? WHERE id = ?', [info, marker_info_id]);
+        if(markerInfoRow.affectedRows === 0) throw new Error(`marker info with id: ${marker_info_id} not found`);
+        console.log(`marker info with id: ${marker_info_id} updated`);
+        // return markerInfoRow;
+    } catch (err) {
+        console.error(err);
+        throw err;
+    }
+};
+
+export const getMarkerInfoByMarkerInfoId = async (marker_info_id) => {
+    try {
+        const [markerInfoRow] = await db.query('SELECT * FROM marker_info WHERE id = ?', [marker_info_id]);
+        console.log(`marker info with id: ${marker_info_id} fetched`);
+        return markerInfoRow[0];
+    } catch (err) {
+        console.error(err);
+        throw err;
+    }
+};
