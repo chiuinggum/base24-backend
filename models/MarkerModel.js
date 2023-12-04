@@ -1,3 +1,4 @@
+import { json } from "express";
 import dbConfig from "../config/dbConfig.js";
 const { db } = dbConfig;
 
@@ -60,6 +61,30 @@ export const updateMarkerInfoByMarkerInfoId = async (marker_info_id, info) => {
 export const getMarkerInfoByMarkerInfoId = async (marker_info_id) => {
     try {
         const [markerInfoRow] = await db.query('SELECT * FROM marker_info WHERE id = ?', [marker_info_id]);
+        console.log(`marker info with id: ${marker_info_id} fetched`);
+        return markerInfoRow[0];
+    } catch (err) {
+        console.error(err);
+        throw err;
+    }
+};
+
+export const updateMarkerMDByMarkerInfoId = async (marker_info_id, json_info) => {
+    try {
+        // json_info = JSON.stringify(json_info);
+        // console.log(json_info);
+        const [markerInfoRow] = await db.query('UPDATE marker_info SET json_info = ? WHERE id = ?', [json_info, marker_info_id]);
+        if(markerInfoRow.affectedRows === 0) throw new Error(`marker info with id: ${marker_info_id} not found`);
+        console.log(`marker info with id: ${marker_info_id} updated`);
+    } catch (err) {
+        console.error(err);
+        throw err;
+    }
+};
+
+export const getMarkerMDByMarkerInfoId = async (marker_info_id) => {
+    try {
+        const [markerInfoRow] = await db.query('SELECT json_info FROM marker_info WHERE id = ?', [marker_info_id]);
         console.log(`marker info with id: ${marker_info_id} fetched`);
         return markerInfoRow[0];
     } catch (err) {
