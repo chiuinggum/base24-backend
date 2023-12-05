@@ -15,7 +15,7 @@ export const createUser = async (username, email, password, provider = "native")
 export const getUserByUsername = async (username) => {
     try {
         const [userRow] = await db.query('SELECT * FROM users WHERE username = ?', [username]);
-        return userRow;
+        return userRow[0];
     } catch (err) {
         console.error(err);
         throw err;
@@ -25,7 +25,7 @@ export const getUserByUsername = async (username) => {
 export const getUserByEmail = async (email) => {
     try {
         const [userRow] = await db.query('SELECT * FROM users WHERE email = ?', [email]);
-        return userRow;
+        return userRow[0];
     } catch (err) {
         console.error(err);
         throw err;

@@ -11,7 +11,9 @@ import {
     checkSignUpFields,
     isUsernameTaken,
     isEmailTaken,
-    signUp
+    signUp,
+    identifyInput,
+    signIn
 } from '../controllers/userController.js';
 
 const usersRouter = express.Router();
@@ -28,6 +30,6 @@ usersRouter.post(
     hashPassword,
     signUp
 );
-usersRouter.post('/signin');
+usersRouter.post('/signin', identifyInput, signIn);
 
 export default usersRouter;
