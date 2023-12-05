@@ -4,11 +4,15 @@ import {
     createMap,
     getMap
 } from '../controllers/MapController.js';
+import {
+    authorization,
+    authorizationVerifyToken
+} from '../services/checkHeaders.js';
 
 const mapRouter = express.Router();
 
 mapRouter.use(bodyParser.json());
-mapRouter.post('/create', createMap);
+mapRouter.post('/create', authorization, authorizationVerifyToken, createMap);
 mapRouter.get('/:id', getMap);
 
 export default mapRouter;
