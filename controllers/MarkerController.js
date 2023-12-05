@@ -4,7 +4,8 @@ import {
     getMarkersByMapId,
     getMarkerLocationById,
     updateMarkerInfoByMarkerInfoId,
-    getMarkerInfoByMarkerInfoId
+    getMarkerInfoByMarkerInfoId,
+    createPathRow
 } from '../models/MarkerModel.js';
 
 export const createMarker = async (req, res, next) => {
@@ -113,5 +114,24 @@ export const updateMarkerMarkdown = async (req, res, next) => {
     } catch (err) {
         console.error(err);
         res.status(500).json({ error: 'Error Updating Marker Markdown' });
+    }
+}
+
+export const createPath = async (req, res, next) => {
+    try {
+        const { map_id } = req.params;
+        const { path } = req.body;
+        const pathRow = await createPathRow(map_id, path);
+        res.status(200).json({
+            data: {
+                id: pathRow.insertId,
+                map_id,
+                path
+            }
+        });
+        next();
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ error: 'Error Creating Path' });
     }
 }

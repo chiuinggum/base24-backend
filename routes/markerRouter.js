@@ -5,7 +5,8 @@ import {
     createMarkerInfo,
     listMarkersDetails,
     updateMarkerInfo,
-    updateMarkerMarkdown
+    updateMarkerMarkdown,
+    createPath
 } from '../controllers/MarkerController.js';
 
 const markerRouter = express.Router();
@@ -16,5 +17,6 @@ markerRouter.post('/info', createMarkerInfo);
 markerRouter.get('/:map_id', listMarkersDetails);
 markerRouter.put('/info/:marker_info_id', updateMarkerInfo);
 markerRouter.put('/update/markdown/:marker_info_id', updateMarkerMarkdown);
+markerRouter.post('/path/:map_id', createPath);
 
 export default markerRouter;

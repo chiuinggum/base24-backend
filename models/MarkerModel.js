@@ -92,3 +92,18 @@ export const getMarkerMDByMarkerInfoId = async (marker_info_id) => {
         throw err;
     }
 };
+
+export const createPathRow = async (map_id, path) => {
+    try {
+        const start_lat = path[0].lat;
+        const start_lng = path[0].lng;
+        const end_lat = path[1].lat;
+        const end_lng = path[1].lng;
+        const [pathRow] = await db.query('INSERT INTO paths (map_id, start_lat, start_lng, end_lat, end_lng) VALUES (?, ?, ?, ?, ?)', [map_id, start_lat, start_lng, end_lat, end_lng]);
+        console.log(`path with map_id: ${map_id} created with id ${pathRow.insertId}`);
+        return pathRow;
+    } catch (err) {
+        console.error(err);
+        throw err;
+    }
+}
