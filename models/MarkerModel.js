@@ -107,3 +107,14 @@ export const createPathRow = async (map_id, path) => {
         throw err;
     }
 }
+
+export const createMarkerPlaceTag = async (marker_info_id, place_tag) => {
+    try {
+        const [markerRow] = await db.query('INSERT INTO marker_info (place_tag) VALUES (?) WHERE id = ?', [place_tag, marker_info_id]);
+        console.log(`marker tag with marker_info_id: ${marker_info_id} created with id ${markerRow.insertId}`);
+        return markerRow[0];
+    } catch (err) {
+        console.error(err);
+        throw err;
+    }
+}

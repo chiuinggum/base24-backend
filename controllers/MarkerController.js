@@ -5,7 +5,8 @@ import {
     getMarkerLocationById,
     updateMarkerInfoByMarkerInfoId,
     getMarkerInfoByMarkerInfoId,
-    createPathRow
+    createPathRow,
+    createMarkerPlaceTag
 } from '../models/MarkerModel.js';
 
 export const createMarker = async (req, res, next) => {
@@ -133,5 +134,13 @@ export const createPath = async (req, res, next) => {
     } catch (err) {
         console.error(err);
         res.status(500).json({ error: 'Error Creating Path' });
+    }
+}
+
+export const createPlaceTag = async (req, res, next) => {
+    try {
+
+    } catch (err) {
+        
     }
 }

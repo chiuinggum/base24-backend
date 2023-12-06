@@ -18,5 +18,6 @@ markerRouter.get('/:map_id', listMarkersDetails);
 markerRouter.put('/info/:marker_info_id', updateMarkerInfo);
 markerRouter.put('/update/markdown/:marker_info_id', updateMarkerMarkdown);
 markerRouter.post('/path/:map_id', createPath);
+markerRouter.post('/palcetag');
 
 export default markerRouter;
