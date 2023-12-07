@@ -1,3 +1,5 @@
+import jwt from 'jsonwebtoken';
+
 export const contentType = async (req, res, next) => {
     const contentType = req.get('Content-Type');
     if (!contentType || contentType !== 'application/json') {
@@ -9,6 +11,7 @@ export const contentType = async (req, res, next) => {
 
 export const authorization = async (req, res, next) => {
     const authorization = req.get('Authorization');
+    console.log(authorization);
     if (!authorization || authorization.split(' ')[0] !== 'Bearer') {
         return res.status(401).json({ error: 'Unauthorized' });
     }

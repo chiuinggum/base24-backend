@@ -5,8 +5,7 @@ import {
 
 export const createMap = async (req, res, next) => {
     try {
-        const user_id = req.user.id;
-        const { name, lat, lng } = req.body;
+        const { name, lat, lng, user_id } = req.body;
         const map = await createMapRow(name, user_id, lat, lng);
         res.status(200).json({
             data: {
