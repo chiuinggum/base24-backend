@@ -91,10 +91,34 @@ export const getDateMarkerRowByDateAndMarkerId = async (date, marker_id) => {
     }
 }
 
+export const getDatePathRowByDateAndPathId = async (date, path_id) => {
+    try {
+        const [datePathRow] = await db.query('SELECT * FROM date_paths WHERE date = ? AND path_id = ?', [date, path_id]);
+        if (datePathRow.length === 0) {
+            return false;
+        }
+        return datePathRow[0];
+    } catch (err) {
+        console.error(err);
+        throw err;
+    }
+}
+
+
 export const getDatesRowOfMarker = async (marker_id) => {
     try {
         const [dateMarkerRow] = await db.query('SELECT * FROM date_markers WHERE marker_id = ? AND deleted = ?', [marker_id, 0]);
         return dateMarkerRow;
+    } catch (err) {
+        console.error(err);
+        throw err;
+    }
+}
+
+export const getDatesRowOfPath = async (path_id) => {
+    try {
+        const [datePathRow] = await db.query('SELECT * FROM date_paths WHERE path_id = ? AND deleted = ?', [path_id, 0]);
+        return datePathRow;
     } catch (err) {
         console.error(err);
         throw err;

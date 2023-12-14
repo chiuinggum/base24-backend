@@ -12,12 +12,15 @@ export const createPath = async (req, res, next) => {
     try {
         const { map_id, start_marker_id, end_marker_id } = req.body;
         const path = await createPathRow(map_id, start_marker_id, end_marker_id);
+        const startMarker = await getMarkerRowByMarkerId(start_marker_id);
+        const endMarker = await getMarkerRowByMarkerId(end_marker_id);
+        path.start_marker_lat = startMarker.lat;
+        path.start_marker_lng = startMarker.lng;
+        path.end_marker_lat = endMarker.lat;
+        path.end_marker_lng = endMarker.lng;
         res.status(200).json({
             data: {
-                id: path.insertId,
-                map_id,
-                start_marker_id,
-                end_marker_id
+                path
             }
         });
         next();

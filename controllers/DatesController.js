@@ -7,7 +7,9 @@ import {
     undeleteDateMarkerRow,
     checkIfDateMarkerRowExists,
     getDateMarkerRowByDateAndMarkerId,
-    getDatesRowOfMarker
+    getDatePathRowByDateAndPathId,
+    getDatesRowOfMarker,
+    getDatesRowOfPath,
 } from "../models/DatesModel.js";
 
 // export const createDatePath = async (req, res, next) => {
@@ -108,6 +110,37 @@ export const updateDateMarkers = async (req, res, next) => {
     }
 }
 
+export const updateDatePaths = async (req, res, next) => {
+    try {
+        const { dates, dateName, path_id } = req.body;
+        console.log(dates, dateName, path_id);
+
+        for (let date of dates) {
+            const datePathRow = await getDatePathRowByDateAndPathId(date, path_id);
+
+            // add
+            if (dateName.includes(date)) {
+                if (datePathRow && datePathRow.deleted === 1) {
+                    await undeleteDatePathRow(date, path_id);
+                } else if (!datePathRow){
+                    await createDatePathRow(date, path_id);
+                }
+                
+            } else {
+                // remove
+                if (datePathRow && datePathRow.deleted === 0) {
+                    await deleteDatePathRow(date, path_id);
+                }
+            }
+        }
+        res.status(200).json({ ok: true });
+        next();
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ error: 'Error Updating Date Paths' });
+    }
+}
+
 export const getDatesByMarkerId = async (req, res, next) => {
     try {
         const { marker_id } = req.params;
@@ -123,5 +156,23 @@ export const getDatesByMarkerId = async (req, res, next) => {
     } catch (err) {
         console.error(err);
         res.status(500).json({ error: 'Error Getting Dates By Marker Id' });
+    }
+}
+
+export const getDatesByPathId = async (req, res, next) => {
+    try {
+        const { path_id } = req.params;
+        const dates = await getDatesRowOfPath(path_id);
+        let data = [];
+        for (let date of dates) {
+            data.push(date.date);
+        }
+        res.status(200).json({
+            data
+        });
+        next();
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ error: 'Error Getting Dates By Path Id' });
     }
 }

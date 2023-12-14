@@ -2,7 +2,9 @@ import express from 'express';
 import bodyParser from 'body-parser';
 import {
     updateDateMarkers,
-    getDatesByMarkerId
+    updateDatePaths,
+    getDatesByMarkerId,
+    getDatesByPathId
 } from "../controllers/DatesController.js";
 
 const datesRouter = express.Router();
@@ -19,10 +21,16 @@ datesRouter.use(bodyParser.json());
 // datesRouter.put('/delete/markers', deleteDateMarker);
 // delete a date (done)
 
-// update markers dates (not tested)
+// update markers dates (done)
 datesRouter.put('/update/markers', updateDateMarkers)
+
+// update paths dates
+datesRouter.put('/update/paths', updateDatePaths)
 
 // get marker dates by marker id 
 datesRouter.get('/get/marker/:marker_id', getDatesByMarkerId);
+
+// get path dates by path id
+datesRouter.get('/get/path/:path_id', getDatesByPathId);
 
 export default datesRouter;
